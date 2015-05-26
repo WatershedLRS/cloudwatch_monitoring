@@ -28,7 +28,7 @@ zip_filepath="#{node[:cw_mon][:home_dir]}/CloudWatchMonitoringScripts-v#{node[:c
 
 case node[:platform_family]
   when 'rhel'
-    %w{perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https}.each do |pkg|
+    %w{perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https perl-Switch}.each do |pkg|
       package pkg do
         action :install
       end
