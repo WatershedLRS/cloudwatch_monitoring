@@ -28,25 +28,17 @@ zip_filepath="#{node[:cw_mon][:home_dir]}/CloudWatchMonitoringScripts-v#{node[:c
 
 case node[:platform_family]
   when 'rhel'
-    %w{unzip perl-CPAN}.each do |p|
-      package p
-    end
-
-    %w{Test::More Bundle::LWP5_837 Bundle::LWP}.each do |m|
-      execute "install Perl module #{m}" do
-        command "perl -MCPAN -e 'install #{m}' < /dev/null"
-        not_if { ::File.directory?(install_path) }
-      end
-    end
-
-  when 'debian'
-
-    %w{unzip libwww-perl libcrypt-ssleay-perl}.each do |p|
-      package p do
+    %w{perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https}.each do |pkg|
+      package pkg do
         action :install
       end
     end
-
+  when 'debian'
+    %w{unzip libwww-perl libdatetime-perl}.each do |pkg|
+      package pkg do
+        action :install
+      end
+    end
   else
     log "#{node[:platform_family]} is not supported" do
       level :warn
