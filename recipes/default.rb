@@ -121,5 +121,5 @@ end
 cron_d 'cloudwatch_monitoring' do
   minute "*/#{node[:cw_mon][:cron_minutes]}"
   user node[:cw_mon][:user]
-  command %Q{#{install_path}/mon-put-instance-data.pl #{(options).join(' ')} || logger -t aws-scripts-mon "status=failed exit_code=$?"}
+  command %Q{EC2_HOME="/opt/aws/apitools/ec2" JAVA_HOME="/usr/lib/jvm/java" #{install_path}/mon-put-instance-data.pl #{(options).join(' ')} || logger -t aws-scripts-mon "status=failed exit_code=$?"}
 end
